@@ -7,6 +7,7 @@ import Nav from "../components/nav"
 import Featured from "../components/featured"
 import Home from "../components/home"
 import "./index.css"
+import Footer from "../components/footer"
 
 const IndexPage = () => (
   <Layout>
@@ -17,6 +18,7 @@ const IndexPage = () => (
     <Link to="/blog" class="viewMore">
       View More
     </Link>
+    <Footer />
   </Layout>
 )
 
