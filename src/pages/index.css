@@ -1,0 +1,15 @@
+.viewMore {
+  font-family: Muli, sans-serif;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 700;
+  color: #FFF;
+  text-align: center;
+  margin-bottom: 40px;
+  display: block;
+  text-decoration: none;
+  transition: all 0.3s ease 0s;
+}
+.viewMore:hover {
+  color: #F86666;
+}
