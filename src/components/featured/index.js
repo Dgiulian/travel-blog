@@ -45,7 +45,7 @@ const Featured = () => (
                 <h1 className="header__title">{edge.node.title}</h1>
                 <p className="header__subtitle">{edge.node.shortDescription}</p>
                 <button
-                  onClick={() => navigate(`/blog/$${edge.node.slug}`)}
+                  onClick={() => navigate(`/blog/${edge.node.slug}`)}
                   className="btn__med"
                 >
                   Read More
