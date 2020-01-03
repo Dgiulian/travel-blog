@@ -16,7 +16,7 @@ exports.createPages = ({ actions, graphql }) => {
   const getBlog = makeRequest(
     graphql,
     `
-    query BlogQuery {
+    query BlogArchiveQuery {
       allContentfulBlog(
         limit: 1
         sort: { fields: createdAt, order: DESC }
@@ -33,9 +33,8 @@ exports.createPages = ({ actions, graphql }) => {
     }`
   ).then(result =>
     result.data.allContentfulBlog.edges.forEach(({ node }) => {
-      console.log(node);
       createPage({
-        path: `blog/${node.slug}`,
+        path: `/blog/${node.slug}`,
         component: path.resolve(`src/templates/blog.js`),
         context: {
           id: node.id,
@@ -43,5 +42,39 @@ exports.createPages = ({ actions, graphql }) => {
       })
     })
   )
-  return Promise.all([getBlog])
+  // Create Archive for all blogs
+  const getArchive = makeRequest(
+    graphql,
+    `
+    query BlogQuery {
+      allContentfulBlog(
+        sort: { fields: createdAt, order: DESC }
+      ) {
+        edges {
+          node {
+            id
+            slug
+            title
+          }
+        }
+      }
+    }`
+  ).then(result => {
+    const blogs = result.data.allContentfulBlog.edges
+    const blogsPerPage = 3
+    const numPages = Math.ceil(blogs.length / blogsPerPage)
+    Array.from({ length: numPages }).forEach((_, i) => {
+      createPage({
+        path: i === 0 ? `/blog` : `/blog/${i + 1}`,
+        component: path.resolve(`src/templates/archive.js`),
+        context: {
+          limit: blogsPerPage,
+          skip: i * blogsPerPage,
+          numPages,
+          currentPage: i + 1,
+        }
+      })
+    })
+  })
+  return Promise.all([getBlog, getArchive])
 }
