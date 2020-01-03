@@ -9,13 +9,16 @@ import "../components/home/home.css"
 import "./archive.css"
 import headerImg from "../images/general-header-image.jpg"
 
-const Archive = props => {
+const Opinion = props => {
   const blogContent = props.data.allContentfulBlog
   const { currentPage, numPages } = props.pageContext
   const isFirst = currentPage === 1
   const isLast = currentPage === numPages
-  const prevPage = currentPage - 1 === 1 ? `/blog` : `/blog/${currentPage - 1}`
-  const nextPage = `/blog/${currentPage + 1}`
+  const prevPage =
+    currentPage - 1 === 1
+      ? `/category/opinion`
+      : `/category/opinion/${currentPage - 1}`
+  const nextPage = `/category/opinion/${currentPage + 1}`
 
   return (
     <Layout>
@@ -42,14 +45,14 @@ const Archive = props => {
               All
             </Link>
             <Link
-              to="/category/travel"
+              to="/category/opinion"
               className={
-                window.location.href.indexOf("category/travel") > 0
+                window.location.href.indexOf("category/opinion") > 0
                   ? `archive__nav--link selected`
                   : `archive__nav--link`
               }
             >
-              Travel
+              Opinion
             </Link>
             <Link
               to="/category/guide"
@@ -122,13 +125,13 @@ const Archive = props => {
   )
 }
 
-export default Archive
+export default Opinion
 
 export const pageQuery = graphql`
-  query ArchiveQuery($skip: Int!, $limit: Int!) {
+  query OpinionQuery($skip: Int!, $limit: Int!) {
     allContentfulBlog(
       sort: { fields: createdAt, order: DESC }
-      filter: {}
+      filter: { category: { elemMatch: { title: { eq: "Opinion" } } } }
       skip: $skip
       limit: $limit
     ) {
