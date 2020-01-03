@@ -18,9 +18,7 @@ exports.createPages = ({ actions, graphql }) => {
     `
     query BlogArchiveQuery {
       allContentfulBlog(
-        limit: 1
         sort: { fields: createdAt, order: DESC }
-        filter: { featured: { eq: true } }
       ) {
         edges {
           node {
@@ -34,7 +32,7 @@ exports.createPages = ({ actions, graphql }) => {
   ).then(result =>
     result.data.allContentfulBlog.edges.forEach(({ node }) => {
       createPage({
-        path: `/blog/${node.slug}`,
+        path: `blog/${node.slug}`,
         component: path.resolve(`src/templates/blog.js`),
         context: {
           id: node.id,

@@ -5,7 +5,6 @@ import Nav from "../components/nav"
 import SEO from "../components/seo"
 import "./blog.css"
 const BlogTemplate = (props) => {
-  console.log(props)
   return (
     <Layout>
       <SEO
@@ -21,7 +20,7 @@ const BlogTemplate = (props) => {
             backgroundImage: `url(${props.data.contentfulBlog.featuredImage.fluid.src})`,
           }}
         >
-          <div className="blog_info">
+          <div className="blog__info">
             <h1 className="blog__title">{props.data.contentfulBlog.title}</h1>
           </div>
         </div>
